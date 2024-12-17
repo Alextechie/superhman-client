@@ -2,8 +2,6 @@ import { db } from "@/server/db";
 
 export const POST = async (req: Request) => {
     const {data} = await req.json();
-    console.log("Clerk webhook received:", data)
-
     const {last_name: lastName, first_name: firstName, image_url :imageUrl, id} =  data;
     const email = data.email_addresses[0].email_address
     console.log(lastName);
