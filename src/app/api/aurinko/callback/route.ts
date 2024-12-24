@@ -1,6 +1,6 @@
 // exchange the code for the token
 
-import { exchangeCodeForToken, getAccountDetails, getAurinkoAuthUrl } from "@/lib/aurinko";
+import { exchangeCodeForToken, getAccountDetails } from "@/lib/aurinko";
 import { db } from "@/server/db";
 import { auth } from "@clerk/nextjs/server"
 import { NextRequest, NextResponse } from "next/server";
@@ -19,7 +19,7 @@ export const GET = async (req: NextRequest) => {
     if (!code) return NextResponse.json( {message: 'No code provided' }, { status: 400 })
     
     // get the token
-    const token = await exchangeCodeForToken(code)
+    const token = await exchangeCodeForToken(code as string)
     if (!token) return NextResponse.json({message: "Error exchanging code for access token"})
 
     // get account details
@@ -38,7 +38,7 @@ export const GET = async (req: NextRequest) => {
 
 
     // add the Account details into the db if they do not exist
-    const insertAccountDetails = await db.account.upsert({
+    await db.account.upsert({
         where: {
             id: accountId.toString()
         },
@@ -55,6 +55,6 @@ export const GET = async (req: NextRequest) => {
         }
     })
 
-    return NextResponse.redirect(new URL('/mail', req.url));
+    return NextResponse.redirect(new URL('/mail', req.url))
 
 }   

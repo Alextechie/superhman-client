@@ -1,7 +1,7 @@
 "use server"
 
 import { auth } from "@clerk/nextjs/server"
-import axios, { Axios } from "axios"
+import axios from "axios"
 import { error } from "console";
 export const getAurinkoAuthUrl = async (serviceType: 'Google' | 'Office365') => {
     const {userId} = await auth();
@@ -23,7 +23,7 @@ export const getAurinkoAuthUrl = async (serviceType: 'Google' | 'Office365') => 
 
 export const exchangeCodeForToken = async (code: string) => {
     try{
-        const response = await axios.post(`https://api.aurinko.io/v1/auth/token${code}`, {}, {
+        const response = await axios.post(`https://api.aurinko.io/v1/auth/token/${code}`, {}, {
             auth: {
                 username: process.env.AURINKO_CLIENT_ID  as string,
                 password: process.env.AURINKO_CLIENT_SECRET as string
@@ -40,7 +40,7 @@ export const exchangeCodeForToken = async (code: string) => {
         if (axios.isAxiosError(error)){
             console.error(error.response?.data)
         }
-        console.error("Error exchanging the code for the tokem")
+        console.error("Error exchanging the code for the token")
     }
 }
 
@@ -50,7 +50,7 @@ export const getAccountDetails = async (accessToken: string) => {
     try{
         const response = await axios.get("https://api.aurinko.io/v1/account", {
             headers: {
-                'Authorization': `Bearer${accessToken}`
+                'Authorization': `Bearer ${accessToken}`
             }
         })
 
