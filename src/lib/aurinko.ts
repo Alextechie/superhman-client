@@ -64,4 +64,6 @@ export const getAccountDetails = async (accessToken: string) => {
         }
         console.error('Unexpected error fetching account details')
     }
-}
+};
+
+

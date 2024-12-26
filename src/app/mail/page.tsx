@@ -1,8 +1,15 @@
 import React from 'react'
+import Mail from './mail'
 
 function MailDashboard() {
   return (
-    <div>MailDashboard</div>
+    <div>
+      <Mail 
+        defaultLayout={[20, 32, 48]}
+        navCollapsedSize={4}
+        defaultCollapsed={false}  
+      />
+    </div>
   )
 }
 
